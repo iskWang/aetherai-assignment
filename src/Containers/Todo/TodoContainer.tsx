@@ -1,10 +1,15 @@
 import React, { useContext, useReducer } from "react";
 import * as Types from "./types";
 
-const TodoContext = React.createContext({});
+const TodoContext = React.createContext<Types.TodoContextType>(
+  {} as Types.TodoContextType
+);
 export const useTodoContext = () => useContext(TodoContext);
 
-const todoReducer = (state: Types.State, action: Types.Action): Types.State => {
+export const todoReducer = (
+  state: Types.State,
+  action: Types.Action
+): Types.State => {
   switch (action.type) {
     case Types.ActionTypes.create:
       return [
@@ -25,7 +30,7 @@ const todoReducer = (state: Types.State, action: Types.Action): Types.State => {
 };
 
 const TodoContainer = (props: Types.TodoContainerType) => {
-  const [items, dispatch] = useReducer(todoReducer, []);
+  const [items, dispatch] = useReducer(todoReducer, [] as Types.TodoItem[]);
 
   return (
     <TodoContext.Provider value={{ items, dispatch }}>
