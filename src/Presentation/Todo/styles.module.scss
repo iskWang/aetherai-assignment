@@ -1,11 +1,19 @@
 .container {
   @apply max-w-[760px];
+
+  :global(.bp5-section-header) {
+    @apply flex  flex-col sm:flex-row;
+  }
+
+  :global(.bp5-section-header-right) {
+    @apply mx-0 sm:ml-auto;
+  }
 }
 
 .actionBar {
-  @apply inline-flex items-center;
+  @apply flex flex-col justify-center lg:flex-row;
 }
 
 .actionInput {
-  @apply w-[220px] mx-[10px];
+  @apply w-[100%] mx-[10px] my-[5px] lg:w-[220px];
 }

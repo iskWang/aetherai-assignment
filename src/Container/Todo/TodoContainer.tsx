@@ -81,7 +81,7 @@ const TodoContainer = (props: Types.TodoContainerType) => {
   const [state, dispatch] = useReducer(todoReducer, {
     todos: [],
     filter: "",
-    orderByDate: "asc",
+    orderByDate: "desc",
   });
 
   return (

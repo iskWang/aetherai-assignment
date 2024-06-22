@@ -1,3 +1,11 @@
 .container {
-  @apply flex justify-center items-center min-h-[100vh];
+  @apply flex
+    min-h-[100vh] 
+    justify-center
+    items-start 
+    my-10 
+    mx-5 
+    lg:items-center 
+    lg:my-auto 
+    lg:mx-auto;
 }
