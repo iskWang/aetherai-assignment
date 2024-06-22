@@ -29,6 +29,7 @@ describe("todoReducer", () => {
   const initState: Types.State = {
     filter: "",
     todos: [],
+    orderByDate: "asc",
   };
 
   const testTodoItem: Types.State["todos"][0] = {
@@ -99,6 +100,55 @@ describe("todoReducer", () => {
 
     const state = todoReducer(initDeleteState, action);
     expect(state.todos[0].text).toEqual(newStr);
+  });
+
+  it("should order todo items by id in ascending order", () => {
+    const initArr = [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({
+      ...testTodoItem,
+      id,
+      text: `Todo ${id}`,
+    }));
+
+    const initSortState = {
+      ...initState,
+      todos: initArr,
+    };
+
+    const action: Types.Action = {
+      type: Types.ActionTypes.orderByDate,
+      payload: "asc",
+    };
+
+    const state = todoReducer(initSortState, action);
+    expect(state.todos).toEqual(initArr);
+  });
+
+  it("should order todo items by id in descending order", () => {
+    const initArr = [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({
+      ...testTodoItem,
+      id,
+      text: `Todo ${id}`,
+    }));
+    const sortedArr = initArr.slice().sort((a, b) => b.id - a.id);
+
+    const initSortState = {
+      ...initState,
+      todos: initArr,
+    };
+
+    const action: Types.Action = {
+      type: Types.ActionTypes.orderByDate,
+      payload: "desc",
+    };
+
+    const state = todoReducer(initSortState, action);
+
+    state.todos.forEach((todo, idx) => {
+      expect(todo.id).toEqual(sortedArr[idx].id);
+      expect(todo.text).toEqual(sortedArr[idx].text);
+    });
+
+    expect(state.todos.length).toEqual(initArr.length);
   });
 });
 

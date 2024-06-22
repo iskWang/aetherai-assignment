@@ -48,6 +48,18 @@ export const todoReducer = (
           return item;
         }),
       };
+    case Types.ActionTypes.orderByDate:
+      return {
+        ...state,
+        orderByDate: action.payload,
+        todos: state.todos.slice().sort((a, b) => {
+          if (action.payload === "asc") {
+            return a.id - b.id;
+          } else {
+            return b.id - a.id;
+          }
+        }),
+      };
 
     default:
       throw new Error(`Unhandled action type`);
@@ -58,6 +70,7 @@ const TodoContainer = (props: Types.TodoContainerType) => {
   const [state, dispatch] = useReducer(todoReducer, {
     todos: [],
     filter: "",
+    orderByDate: "asc",
   });
 
   return (

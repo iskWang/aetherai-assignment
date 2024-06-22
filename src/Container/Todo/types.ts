@@ -7,6 +7,7 @@ export type TodoItem = {
 };
 
 export type Filter = string;
+export type OrderByDate = "asc" | "desc";
 
 export enum ActionTypes {
   create = "CREATE_TODO",
@@ -14,6 +15,7 @@ export enum ActionTypes {
   delete = "DELETE_TODO",
   filter = "FILTER_TODO",
   edit = "EDIT_TODO",
+  orderByDate = "ORDER_BY_DATE_TODO",
 }
 
 export type Action =
@@ -21,11 +23,13 @@ export type Action =
   | { type: ActionTypes.toggle; payload: TodoItem["id"] }
   | { type: ActionTypes.delete; payload: TodoItem["id"] }
   | { type: ActionTypes.filter; payload: Filter }
-  | { type: ActionTypes.edit; payload: Pick<TodoItem, "id" | "text"> };
+  | { type: ActionTypes.edit; payload: Pick<TodoItem, "id" | "text"> }
+  | { type: ActionTypes.orderByDate; payload: OrderByDate };
 
 export type State = {
   todos: TodoItem[];
   filter: Filter;
+  orderByDate: OrderByDate;
 };
 
 export type TodoContextType = {

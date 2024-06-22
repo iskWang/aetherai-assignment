@@ -11,6 +11,28 @@ import {
 } from "@blueprintjs/core";
 import styles from "./styles.module.scss";
 
+const Title = () => {
+  const { state, dispatch } = useTodoContext();
+
+  const _onClick = () => {
+    dispatch({
+      type: TodoTypes.ActionTypes.orderByDate,
+      payload: state.orderByDate === "desc" ? "asc" : "desc",
+    });
+  };
+
+  return (
+    <div className="inline-flex items-center">
+      <Button
+        className="mr-5"
+        icon={state.orderByDate === "desc" ? "sort-asc" : "sort-desc"}
+        onClick={_onClick}
+      />
+      <h3>Todo APP</h3>
+    </div>
+  );
+};
+
 const ActionBar = (props: {
   handleOnCreate: (value: string) => void;
   handleOnFilter: (value: string) => void;
@@ -91,7 +113,7 @@ const TodoPresentation = () => {
 
   return (
     <Section
-      title="Todo APP"
+      title={<Title />}
       className={styles.container}
       rightElement={
         <ActionBar
