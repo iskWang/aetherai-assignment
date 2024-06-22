@@ -6,21 +6,28 @@ export type TodoItem = {
   completed: boolean;
 };
 
+export type Filter = string;
+
 export enum ActionTypes {
   create = "CREATE_TODO",
   toggle = "TOGGLE_TODO",
   delete = "DELETE_TODO",
+  filter = "FILTER_TODO",
 }
 
 export type Action =
   | { type: ActionTypes.create; payload: TodoItem["text"] }
   | { type: ActionTypes.toggle; payload: TodoItem["id"] }
-  | { type: ActionTypes.delete; payload: TodoItem["id"] };
+  | { type: ActionTypes.delete; payload: TodoItem["id"] }
+  | { type: ActionTypes.filter; payload: Filter };
 
-export type State = TodoItem[];
+export type State = {
+  todos: TodoItem[];
+  filter: Filter;
+};
 
 export type TodoContextType = {
-  items: TodoItem[];
+  state: State;
   dispatch: Dispatch<Action>;
 };
 

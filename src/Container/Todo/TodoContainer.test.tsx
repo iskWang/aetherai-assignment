@@ -7,7 +7,7 @@ import TodoContainer, { todoReducer, useTodoContext } from "./TodoContainer";
 import * as Types from "./types";
 
 const TestComponent = () => {
-  const { items, dispatch } = useTodoContext();
+  const { state, dispatch } = useTodoContext();
 
   useEffect(() => {
     dispatch({
@@ -18,7 +18,7 @@ const TestComponent = () => {
 
   return (
     <ul>
-      {items.map((item) => (
+      {state.todos.map((item) => (
         <li key={item.id}>{item.text}</li>
       ))}
     </ul>
@@ -26,72 +26,59 @@ const TestComponent = () => {
 };
 
 describe("todoReducer", () => {
-  const baseItem: Types.TodoItem = {
+  const initState: Types.State = {
+    filter: "",
+    todos: [],
+  };
+
+  const testTodoItem: Types.State["todos"][0] = {
     id: Date.now(),
     text: "Test",
     completed: false,
   };
 
   it("should create add a todo item", () => {
-    const initState: Types.TodoItem[] = [];
     const action: Types.Action = {
       type: Types.ActionTypes.create,
-      payload: baseItem.text,
+      payload: testTodoItem.text,
     };
 
     const state = todoReducer(initState, action);
-    expect(state).toHaveLength(1);
-    expect(state[0].text).toEqual(baseItem.text);
+    expect(state.todos).toHaveLength(1);
+    expect(state.todos[0].text).toEqual(testTodoItem.text);
   });
 
   it("should toggle todo item to true", () => {
-    const testItem = {
-      ...baseItem,
-      completed: false,
+    const initToggleState = {
+      ...initState,
+      todos: [{ ...testTodoItem }],
     };
-    const initState: Types.TodoItem[] = [testItem];
 
     const action: Types.Action = {
       type: Types.ActionTypes.toggle,
-      payload: testItem.id,
+      payload: testTodoItem.id,
     };
 
-    const state = todoReducer(initState, action);
-    expect(state).toHaveLength(1);
-    expect(state[0].completed).toEqual(true);
-  });
+    const state = todoReducer(initToggleState, action);
+    expect(state.todos[0].completed).toBe(!testTodoItem.completed);
 
-  it("should toggle todo item to false", () => {
-    const testItem = {
-      ...baseItem,
-      completed: true,
-    };
-    const initState: Types.TodoItem[] = [testItem];
-
-    const action: Types.Action = {
-      type: Types.ActionTypes.toggle,
-      payload: testItem.id,
-    };
-
-    const state = todoReducer(initState, action);
-    expect(state).toHaveLength(1);
-    expect(state[0].completed).toEqual(false);
+    const newState = todoReducer(state, action);
+    expect(newState.todos[0].completed).toBe(!!testTodoItem.completed);
   });
 
   it("should delete a todo item", () => {
-    const testItem = {
-      ...baseItem,
-      completed: true,
+    const initDeleteState = {
+      ...initState,
+      todos: [{ ...testTodoItem }],
     };
-    const initState: Types.TodoItem[] = [testItem];
 
     const action: Types.Action = {
       type: Types.ActionTypes.delete,
-      payload: testItem.id,
+      payload: testTodoItem.id,
     };
 
-    const state = todoReducer(initState, action);
-    expect(state.some((el) => el.id === testItem.id)).toEqual(false);
+    const state = todoReducer(initDeleteState, action);
+    expect(state.todos.some((el) => el.id === testTodoItem.id)).toEqual(false);
   });
 });
 

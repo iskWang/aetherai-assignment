@@ -1,9 +1,12 @@
-import TodoContainer from "./Containers/Todo/TodoContainer";
+import TodoScene from "Scene/Todo";
+import styles from "./App.module.scss";
 
 const App = () => {
   return (
     <>
-      <TodoContainer />
+      <div className={styles.container}>
+        <TodoScene />
+      </div>
     </>
   );
 };

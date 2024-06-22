@@ -1,0 +1,11 @@
+.card {
+  @apply flex justify-between;
+
+  div {
+    @apply flex-1;
+  }
+}
+
+.actions {
+  @apply text-right;
+}

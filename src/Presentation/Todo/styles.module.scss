@@ -1,0 +1,11 @@
+.container {
+  @apply max-w-[760px];
+}
+
+.actionBar {
+  @apply inline-flex items-center;
+}
+
+.actionInput {
+  @apply w-[220px] mx-[10px];
+}
