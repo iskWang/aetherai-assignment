@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTodoContext, types as TodoTypes } from "Container/Todo";
 
-import TodoItem from "Component/TodoItem";
+import TodoItem, { TodoItemProps } from "Component/TodoItem";
 import {
   Section,
   CardList,
@@ -64,12 +64,22 @@ const TodoPresentation = () => {
     });
   };
 
-  const handleOnDelete = (id: TodoTypes.TodoItem["id"]) => () => {
+  const handleOnFilter = (text: TodoTypes.TodoItem["text"]) => {
+    dispatch({ type: TodoTypes.ActionTypes.filter, payload: text });
+  };
+
+  const handleOnDelete: TodoItemProps["handleOnDelete"] = (id) => {
     dispatch({ type: TodoTypes.ActionTypes.delete, payload: id });
   };
 
-  const handleOnFilter = (text: TodoTypes.TodoItem["text"]) => {
-    dispatch({ type: TodoTypes.ActionTypes.filter, payload: text });
+  const handleOnTextChange: TodoItemProps["handleOnTextChange"] = (
+    id,
+    text
+  ) => {
+    dispatch({
+      type: TodoTypes.ActionTypes.edit,
+      payload: { id, text },
+    });
   };
 
   return (
@@ -90,7 +100,8 @@ const TodoPresentation = () => {
             <TodoItem
               key={item.id}
               {...item}
-              handleOnDelete={handleOnDelete(item.id)}
+              handleOnDelete={handleOnDelete}
+              handleOnTextChange={handleOnTextChange}
             />
           ))}
       </CardList>

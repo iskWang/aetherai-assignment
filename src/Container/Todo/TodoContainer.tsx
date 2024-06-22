@@ -38,6 +38,17 @@ export const todoReducer = (
         ...state,
         filter: action.payload,
       };
+    case Types.ActionTypes.edit:
+      return {
+        ...state,
+        todos: state.todos.map((item) => {
+          if (item.id === action.payload.id) {
+            item.text = action.payload.text;
+          }
+          return item;
+        }),
+      };
+
     default:
       throw new Error(`Unhandled action type`);
   }

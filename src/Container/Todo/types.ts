@@ -13,13 +13,15 @@ export enum ActionTypes {
   toggle = "TOGGLE_TODO",
   delete = "DELETE_TODO",
   filter = "FILTER_TODO",
+  edit = "EDIT_TODO",
 }
 
 export type Action =
   | { type: ActionTypes.create; payload: TodoItem["text"] }
   | { type: ActionTypes.toggle; payload: TodoItem["id"] }
   | { type: ActionTypes.delete; payload: TodoItem["id"] }
-  | { type: ActionTypes.filter; payload: Filter };
+  | { type: ActionTypes.filter; payload: Filter }
+  | { type: ActionTypes.edit; payload: Pick<TodoItem, "id" | "text"> };
 
 export type State = {
   todos: TodoItem[];

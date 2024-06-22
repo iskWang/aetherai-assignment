@@ -80,6 +80,26 @@ describe("todoReducer", () => {
     const state = todoReducer(initDeleteState, action);
     expect(state.todos.some((el) => el.id === testTodoItem.id)).toEqual(false);
   });
+
+  it("should edit a todo item", () => {
+    const newStr = "A whole new world";
+
+    const initDeleteState = {
+      ...initState,
+      todos: [{ ...testTodoItem }],
+    };
+
+    const action: Types.Action = {
+      type: Types.ActionTypes.edit,
+      payload: {
+        id: testTodoItem.id,
+        text: newStr,
+      },
+    };
+
+    const state = todoReducer(initDeleteState, action);
+    expect(state.todos[0].text).toEqual(newStr);
+  });
 });
 
 describe("TodoContainer", () => {
