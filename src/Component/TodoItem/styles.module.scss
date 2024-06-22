@@ -1,15 +1,5 @@
 .card {
   @apply flex justify-between;
-
-  &.completed {
-    &:global(.bp5-card) {
-      @apply bg-green-300;
-    }
-  }
-
-  div {
-    @apply flex-1;
-  }
 }
 
 .actions {
@@ -18,8 +8,33 @@
 
 .action {
   @apply ml-2;
+
+  &:global(.bp5-button) {
+    @apply outline-none;
+  }
 }
 
 .input {
-  @apply bg-transparent;
+  @apply bg-transparent ml-[110px];
+}
+
+.textArea {
+  @apply inline-flex relative;
+  width: calc(100% - 250px);
+}
+
+.completed {
+  &:global(.bp5-card) {
+    @apply bg-slate-300;
+  }
+
+  .textArea::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: black;
+  }
 }

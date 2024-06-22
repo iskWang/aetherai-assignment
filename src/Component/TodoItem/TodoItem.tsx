@@ -57,8 +57,8 @@ const TodoItem = (props: TodoItemProps) => {
 
   return (
     <Card className={cx(styles.card, { [styles.completed]: props.completed })}>
-      <div>{getDateString(new Date(props.id))}</div>
-      <div className="ml-5">
+      <div className={styles.textArea}>
+        <div>{getDateString(new Date(props.id))}</div>
         <input
           ref={textInputRef}
           type="text"
