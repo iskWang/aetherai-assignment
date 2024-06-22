@@ -24,7 +24,7 @@ export type Action =
   | { type: ActionTypes.delete; payload: TodoItem["id"] }
   | { type: ActionTypes.filter; payload: Filter }
   | { type: ActionTypes.edit; payload: Pick<TodoItem, "id" | "text"> }
-  | { type: ActionTypes.orderByDate; payload: OrderByDate };
+  | { type: ActionTypes.orderByDate; payload?: OrderByDate };
 
 export type State = {
   todos: TodoItem[];

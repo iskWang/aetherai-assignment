@@ -44,6 +44,12 @@ const ActionBar = (props: {
     setTempNewText("");
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      onCreate();
+    }
+  };
+
   return (
     <div className={styles.actionBar}>
       <InputGroup
@@ -52,24 +58,27 @@ const ActionBar = (props: {
         placeholder="Filter histogram..."
         onValueChange={props.handleOnFilter}
       />
-      <InputGroup
-        className={styles.actionInput}
-        leftIcon="add"
-        intent="success"
-        placeholder="Create something new!"
-        value={tempNewText}
-        onValueChange={setTempNewText}
-        rightElement={
-          <Tooltip content="Click me!" position="right">
-            <Button
-              icon="arrow-right"
-              minimal
-              outlined={false}
-              onClick={onCreate}
-            />
-          </Tooltip>
-        }
-      />
+
+      <div onKeyDown={handleKeyDown}>
+        <InputGroup
+          className={styles.actionInput}
+          leftIcon="add"
+          intent="success"
+          placeholder="Create something new!"
+          value={tempNewText}
+          onValueChange={setTempNewText}
+          rightElement={
+            <Tooltip content="Click me!" position="right">
+              <Button
+                icon="arrow-right"
+                minimal
+                outlined={false}
+                onClick={onCreate}
+              />
+            </Tooltip>
+          }
+        />
+      </div>
     </div>
   );
 };
@@ -122,7 +131,7 @@ const TodoPresentation = () => {
         />
       }
     >
-      <CardList bordered>
+      <CardList bordered className="h-[500px]">
         {state.todos
           .filter((el) => el.text.toLowerCase().includes(state.filter))
           .map((item) => (

@@ -11,7 +11,9 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <OverlaysProvider>
-      <App />
+      <HotkeysProvider>
+        <App />
+      </HotkeysProvider>
     </OverlaysProvider>
   </React.StrictMode>
 );

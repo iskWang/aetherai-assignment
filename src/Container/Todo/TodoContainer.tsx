@@ -6,18 +6,33 @@ const TodoContext = React.createContext<Types.TodoContextType>(
 );
 export const useTodoContext = () => useContext(TodoContext);
 
+const orderTodos = (
+  orderByDate: Types.State["orderByDate"],
+  todos: Types.State["todos"]
+) => {
+  return todos.slice().sort((a, b) => {
+    if (orderByDate === "asc") {
+      return a.id - b.id;
+    } else {
+      return b.id - a.id;
+    }
+  });
+};
+
 export const todoReducer = (
   state: Types.State,
   action: Types.Action
 ): Types.State => {
   switch (action.type) {
     case Types.ActionTypes.create:
+      const newTodos = [
+        ...state.todos,
+        { id: Date.now(), text: action.payload, completed: false },
+      ];
+
       return {
         ...state,
-        todos: [
-          ...state.todos,
-          { id: Date.now(), text: action.payload, completed: false },
-        ],
+        todos: orderTodos(state.orderByDate, newTodos),
       };
     case Types.ActionTypes.toggle:
       return {
@@ -49,16 +64,12 @@ export const todoReducer = (
         }),
       };
     case Types.ActionTypes.orderByDate:
+      const orderByDate = action.payload || state.orderByDate;
+
       return {
         ...state,
-        orderByDate: action.payload,
-        todos: state.todos.slice().sort((a, b) => {
-          if (action.payload === "asc") {
-            return a.id - b.id;
-          } else {
-            return b.id - a.id;
-          }
-        }),
+        orderByDate,
+        todos: orderTodos(orderByDate, state.todos),
       };
 
     default:
