@@ -26,7 +26,7 @@ const ActionBar = (props: {
     <div className={styles.actionBar}>
       <InputGroup
         className={styles.actionInput}
-        leftIcon="filter"
+        leftIcon="search"
         placeholder="Filter histogram..."
         onValueChange={props.handleOnFilter}
       />
@@ -55,7 +55,7 @@ const ActionBar = (props: {
 const TodoPresentation = () => {
   const { state, dispatch } = useTodoContext();
 
-  const handleOnCreate = (value: string) => {
+  const _handleOnCreate = (value: string) => {
     if (!value) return;
 
     dispatch({
@@ -64,15 +64,15 @@ const TodoPresentation = () => {
     });
   };
 
-  const handleOnFilter = (text: TodoTypes.TodoItem["text"]) => {
+  const _handleOnFilter = (text: TodoTypes.TodoItem["text"]) => {
     dispatch({ type: TodoTypes.ActionTypes.filter, payload: text });
   };
 
-  const handleOnDelete: TodoItemProps["handleOnDelete"] = (id) => {
+  const _handleOnDelete: TodoItemProps["handleOnDelete"] = (id) => {
     dispatch({ type: TodoTypes.ActionTypes.delete, payload: id });
   };
 
-  const handleOnTextChange: TodoItemProps["handleOnTextChange"] = (
+  const _handleOnTextChange: TodoItemProps["handleOnTextChange"] = (
     id,
     text
   ) => {
@@ -82,14 +82,21 @@ const TodoPresentation = () => {
     });
   };
 
+  const _handleOnToggle: TodoItemProps["handleOnToggle"] = (id) => {
+    dispatch({
+      type: TodoTypes.ActionTypes.toggle,
+      payload: id,
+    });
+  };
+
   return (
     <Section
       title="Todo APP"
       className={styles.container}
       rightElement={
         <ActionBar
-          handleOnCreate={handleOnCreate}
-          handleOnFilter={handleOnFilter}
+          handleOnCreate={_handleOnCreate}
+          handleOnFilter={_handleOnFilter}
         />
       }
     >
@@ -100,8 +107,9 @@ const TodoPresentation = () => {
             <TodoItem
               key={item.id}
               {...item}
-              handleOnDelete={handleOnDelete}
-              handleOnTextChange={handleOnTextChange}
+              handleOnDelete={_handleOnDelete}
+              handleOnTextChange={_handleOnTextChange}
+              handleOnToggle={_handleOnToggle}
             />
           ))}
       </CardList>

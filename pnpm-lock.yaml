@@ -20,6 +20,9 @@ importers:
       '@types/node':
         specifier: ^20.14.7
         version: 20.14.7
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1

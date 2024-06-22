@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import cx from "classnames";
 import {
   Card,
   Button,
@@ -15,6 +16,7 @@ import styles from "./styles.module.scss";
 
 export type TodoItemProps = TodoContainerTypes.TodoItem & {
   handleOnDelete?: (id: TodoContainerTypes.TodoItem["id"]) => void;
+  handleOnToggle?: (id: TodoContainerTypes.TodoItem["id"]) => void;
   handleOnTextChange?: (
     id: TodoContainerTypes.TodoItem["id"],
     text: TodoContainerTypes.TodoItem["text"]
@@ -43,6 +45,10 @@ const TodoItem = (props: TodoItemProps) => {
     props.handleOnDelete && props.handleOnDelete(props.id);
   };
 
+  const _handleOnToggle = () => {
+    props.handleOnToggle && props.handleOnToggle(props.id);
+  };
+
   const _handleOnTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
 
@@ -50,20 +56,33 @@ const TodoItem = (props: TodoItemProps) => {
   };
 
   return (
-    <Card className={styles.card}>
-      <div>
+    <Card className={cx(styles.card, { [styles.completed]: props.completed })}>
+      <div>{getDateString(new Date(props.id))}</div>
+      <div className="ml-5">
         <input
           ref={textInputRef}
           type="text"
+          className={styles.input}
           value={props.text}
+          disabled={props.completed}
           onChange={_handleOnTextChange}
           onMouseEnter={handleTextInputMouseEnter}
           onMouseLeave={handleTextInputMouseLeave}
         />
       </div>
-      <div>{getDateString(new Date(props.id))}</div>
       <div className={styles.actions}>
-        <Button icon="trash" onClick={() => setDialogIsOpen(true)} />
+        <Button
+          className={styles.action}
+          intent={props.completed ? "none" : "success"}
+          icon={props.completed ? "edit" : "tick-circle"}
+          onClick={_handleOnToggle}
+        />
+        <Button
+          className={styles.action}
+          icon="trash"
+          intent="danger"
+          onClick={() => setDialogIsOpen(true)}
+        />
       </div>
       <Dialog
         title="Informational dialog"

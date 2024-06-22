@@ -1,6 +1,12 @@
 .card {
   @apply flex justify-between;
 
+  &.completed {
+    &:global(.bp5-card) {
+      @apply bg-green-300;
+    }
+  }
+
   div {
     @apply flex-1;
   }
@@ -8,4 +14,12 @@
 
 .actions {
   @apply text-right;
+}
+
+.action {
+  @apply ml-2;
+}
+
+.input {
+  @apply bg-transparent;
 }
