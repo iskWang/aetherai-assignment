@@ -55,7 +55,7 @@ const ActionBar = (props: {
       <InputGroup
         className={styles.actionInput}
         leftIcon="search"
-        placeholder="Filter histogram..."
+        placeholder="I am looking for..."
         onValueChange={props.handleOnFilter}
       />
 
@@ -68,7 +68,7 @@ const ActionBar = (props: {
           value={tempNewText}
           onValueChange={setTempNewText}
           rightElement={
-            <Tooltip content="Click me!" position="right">
+            <Tooltip content="You can use the Enter key!" position="right">
               <Button
                 icon="arrow-right"
                 minimal
@@ -133,7 +133,9 @@ const TodoPresentation = () => {
     >
       <CardList bordered className="h-[500px]">
         {state.todos
-          .filter((el) => el.text.toLowerCase().includes(state.filter))
+          .filter((el) =>
+            el.text.toLowerCase().includes(state.filter.toLowerCase())
+          )
           .map((item) => (
             <TodoItem
               key={item.id}

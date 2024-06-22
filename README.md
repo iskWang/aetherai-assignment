@@ -1,30 +1,72 @@
-# React + TypeScript + Vite
+## Demo site:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [https://me.josh.com.tw/aetherai-assignment/](https://me.josh.com.tw/aetherai-assignment/)
 
-Currently, two official plugins are available:
+## Demo video:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/ngE5eiXs5c8/0.jpg)](http://www.youtube.com/watch?v=ngE5eiXs5c8 "Demo video")
 
-## Expanding the ESLint configuration
+## How to Start the Application
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
 
-- Configure the top-level `parserOptions` property like this:
+   ```sh
+   $ git clone git@github.com:iskWang/aetherai-assignment.git
+   ```
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+2. Navigate to the project directory:
+
+   ```sh
+   $ cd aetherai-assignment
+   ```
+
+3. Install the dependencies (using pnpm or your preferred package manager):
+
+   ```sh
+   $ pnpm install
+   ```
+
+4. Start the development server:
+   ```sh
+   $ pnpm dev
+   ```
+
+## Project Structure
+
+```bash
+/src
+  /Asset
+  /Component
+    /TodoItem
+  /Container
+  /Lib
+  /Presentation
+  /Scene
+  /test
+  App.tsx
+  main.tsx
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Main Component
+
+#### Component
+
+Mainly for UI component
+
+- `/Component/TodoItem`: UI component for modify and delete content in to-do list.
+
+### Container
+
+Connect reducer store and manage state logic.
+
+- `/Container/Todo/TodoContainer/`: Manage to-do list store and logic.
+
+### Presentation
+
+The main UI page for combine components and reducer actions
+
+- `/Presentation/Todo/TodoPresentation`: The entrie of the components and container actions.
+
+### Scene
+
+Combines Container, Presentation, and is intended for future use with routing requirements(eg. redirect logout)
