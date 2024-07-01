@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 
 import { describe, it, expect } from "vitest";
 
-import TodoContainer, { todoReducer, useTodoContext } from "./TodoContainer";
+import TodoContainer, { todoReducer, useTodoContext } from "./";
 import * as Types from "./types";
 
 const TestComponent = () => {
