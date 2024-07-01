@@ -4,7 +4,16 @@ import * as Types from "./types";
 const TodoContext = React.createContext<Types.TodoContextType>(
   {} as Types.TodoContextType
 );
-export const useTodoContext = () => useContext(TodoContext);
+
+export const useTodoContext = () => {
+  const context = useContext(TodoContext);
+
+  if (!context) {
+    throw new Error(`useTodoContext must be used within a TodoProvider`);
+  }
+
+  return context;
+};
 
 const orderTodos = (
   orderByDate: Types.State["orderByDate"],
@@ -24,7 +33,7 @@ export const todoReducer = (
   action: Types.Action
 ): Types.State => {
   switch (action.type) {
-    case Types.ActionTypes.create:
+    case Types.ActionTypes.create: {
       const newTodos = [
         ...state.todos,
         { id: Date.now(), text: action.payload, completed: false },
@@ -34,6 +43,8 @@ export const todoReducer = (
         ...state,
         todos: orderTodos(state.orderByDate, newTodos),
       };
+    }
+
     case Types.ActionTypes.toggle:
       return {
         ...state,
@@ -63,7 +74,7 @@ export const todoReducer = (
           return item;
         }),
       };
-    case Types.ActionTypes.orderByDate:
+    case Types.ActionTypes.orderByDate: {
       const orderByDate = action.payload || state.orderByDate;
 
       return {
@@ -71,6 +82,7 @@ export const todoReducer = (
         orderByDate,
         todos: orderTodos(orderByDate, state.todos),
       };
+    }
 
     default:
       throw new Error(`Unhandled action type`);
